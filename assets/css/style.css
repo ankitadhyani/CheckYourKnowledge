@@ -1,0 +1,21 @@
+
+img{
+    border: 3px solid black;
+}
+.mainBody {
+    border: 3px solid black;
+    /* background-image: url("../images/bgQuiz2.jpg"); */
+}
+
+.myheader{
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-image: url("../images/bgQuiz2.jpg");
+    /* background-color: rgb(201, 192, 192); */
+}
+
+.content {
+    /* background-color: rgb(201, 192, 192); */
+}
+

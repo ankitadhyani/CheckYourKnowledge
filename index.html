@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Check your Knowledge!</title>
+
+
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Added a link to our external stylesheet-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+<body>
+    
+    <div class="container mainBody">
+
+        <div class="jumbotron jumbotron-fluid myheader">
+            <div class="container">
+              <h2 class="display-3">Guess the Flags??</h2>
+               <h3>Time Remaining: <span id="timeRemaining"></span> seconds</h3>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div id="startUp">
+                <h3>Instructions:</h3>
+                <p>
+                    1. Total number of questions = 10
+                    <br>
+                    2. Time given to complete each question = 10 seconds.
+                    <br>
+                    3. Please do not google the answers, complete the quiz based on your knowledge base.
+                    <br><br>
+                    <strong>ALL THE BEST!!!</strong>
+                </p>
+
+                <button id="start" class="btn btn-primary btn-lg">Start Quiz</button>
+            </div>
+
+            <form id="question"></form>
+            
+            <div class="d-flex justify-content-center m-5">
+                <div id="submit"></div>
+            </div>
+
+            <div id="result"></div>
+
+            <div class="d-flex justify-content-center">
+                <div id="strtNewQuiz"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+</body>
+</html>
