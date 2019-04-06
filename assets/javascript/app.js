@@ -10,7 +10,6 @@ $(document).ready(function(){
 
     //For each quiz assign time as 60 seconds
     var $timeRemaining = 10;
-    $("#timeRemaining").text($timeRemaining);
 
     //Counter that tracks the question number
     var questionNo = 0;
@@ -148,7 +147,7 @@ $(document).ready(function(){
         //Create "Submit" button
         $("<button>")
             .attr("type", "button")
-            .addClass("btn btn-primary")
+            .addClass("btn btn-info")
             .append(`<h3>Submit</h3>`)
             .appendTo($("#submit"));
 
@@ -171,6 +170,7 @@ $(document).ready(function(){
         //Reset 'result' and 'question' element
         $("#result").empty(); 
         $("#question").empty();
+        $("#timeRemaining").empty();
 
         //If all questions have been populated then call final results function
         if(questionNo === questionsObj.length) { 
@@ -181,7 +181,7 @@ $(document).ready(function(){
 
         //Reset timer to 10 seconds each time new quiz starts
         $timeRemaining = 10;
-        $("#timeRemaining").text($timeRemaining);
+        $("#timeRemaining").text(`Time Remaining: ${$timeRemaining} seconds`);
 
         // Shuffle questions before calling generateQuestions() fun only when the quiz starts
         if(questionNo === 0) {
@@ -223,7 +223,7 @@ $(document).ready(function(){
         }
         //Decrement time remaining by 1 after every second and populate it on the page
         $timeRemaining--;
-        $("#timeRemaining").text($timeRemaining);
+        $("#timeRemaining").text(`Time Remaining: ${$timeRemaining} seconds`);
         
     }
 
@@ -316,7 +316,7 @@ $(document).ready(function(){
         //Create "Start new quiz" button
         $("<button>")
             .attr("type", "button")
-            .addClass("btn btn-primary mb-5")
+            .addClass("btn btn-info mb-5")
             .append(`<h3>Start Quiz Again</h3>`)
             .appendTo($("#strtNewQuiz"));
 
@@ -337,7 +337,7 @@ $(document).ready(function(){
         var correctAnsCount = 0;
 
         var $timeRemaining = 10;
-        $("#timeRemaining").text($timeRemaining);
+        $("#timeRemaining").text(`Time Remaining: ${$timeRemaining} seconds`);
 
         $("#result").empty();
         $("#strtNewQuiz").empty();

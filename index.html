@@ -13,6 +13,9 @@
     <!-- Added a link to Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+    <!-- Added a link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
     <!-- Added a link to our external stylesheet-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
@@ -23,8 +26,9 @@
 
         <div class="jumbotron jumbotron-fluid myheader">
             <div class="container">
-              <h2 class="display-3">Guess the Flags??</h2>
-               <h3>Time Remaining: <span id="timeRemaining"></span> seconds</h3>
+              <h2 class="display-3 header">Guess the Flags!!</h2>
+               <!-- <h3>Time Remaining: <span id="timeRemaining"></span> seconds</h3> -->
+               <h3 id="timeRemaining"></h3>
             </div>
         </div>
 
@@ -42,7 +46,7 @@
                     <strong>ALL THE BEST!!!</strong>
                 </p>
 
-                <button id="start" class="btn btn-primary btn-lg">Start Quiz</button>
+                <button id="start" class="btn btn-info btn-lg">Start Quiz</button>
             </div>
 
             <form id="question"></form>
