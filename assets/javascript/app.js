@@ -81,25 +81,26 @@ $(document).ready(function(){
             return;
 
         // Create div to hold question
-        var $question = $("<div>").addClass("form-group m-3");
+        var $question = $("<div>").addClass("form-group mt-3 pt-3 pl-5");
 
         //Adding question to div
-        var $label = $("<h4>")
-        .text(questionsObj[questionNo].question)
-        .appendTo($question); 
+        $("<h4>")
+            .text(questionsObj[questionNo].question)
+            .appendTo($question); 
 
         //Adding question - image
-        var $image = $("<img class='m-3'>");
-        $image.attr("src", questionsObj[questionNo].image);
-        $image.attr("width", 250);
-        $question.append($image);
+        $("<img>")
+            .addClass('m-3')
+            .attr("src", questionsObj[questionNo].image)
+            .attr("width", 250)
+            .appendTo($question);
         
 
         // Shuffle options
         questionsObj[questionNo].options = questionsObj[questionNo].options.sort(function() {
             return .5 - Math.random();
         });
-
+        console.log("Shuffle options: " + questionsObj[questionNo].options);
 
         // Create a loop to iterate through question's options and create radio buttons for each one
         for(var j=0 ; j<questionsObj[questionNo].options.length ; j++) {
@@ -140,22 +141,30 @@ $(document).ready(function(){
         //Appending all elements of the question to the respective div
         $("#question").append($question);
 
+        //Create a border between question and 'Submit button'
         $("#question").css('border-bottom', 'solid 3px grey');
 
 
         //Create "Submit" button
-        $("#submit").append("<button type='button' class='btn btn-info btn-lg'><h3>Submit</h3></button>");
+        $("<button>")
+            .attr("type", "button")
+            .addClass("btn btn-primary")
+            .append(`<h3>Submit</h3>`)
+            .appendTo($("#submit"));
+
 
     }//End of generateQuestions()
 
 
 
-    //*********** DEFINING ONCLICK FUNCTIONS ********************** */
+    //*********** DEFINING ONCLICK EVENTS ********************** */
 
     $("#start").on("click", start);
     $("#submit").on("click", onSubmit);
     $("#strtNewQuiz").on("click", startNewQuiz);
 
+
+    //*********** DEFINING ONCLICK FUNCTIONS ********************** */
 
     function start() {
 
@@ -174,6 +183,15 @@ $(document).ready(function(){
         $timeRemaining = 10;
         $("#timeRemaining").text($timeRemaining);
 
+        // Shuffle questions before calling generateQuestions() fun only when the quiz starts
+        if(questionNo === 0) {
+            
+            questionsObj = questionsObj.sort(function() {
+                return .5 - Math.random();
+            });
+            console.log("Shuffle question: " + questionsObj);
+        }
+
         //Use setInterval to start the count here and set the clock to running.
         if (!clockRunning) {
 
@@ -185,10 +203,13 @@ $(document).ready(function(){
             //Call function to generate question
             generateQuestions();
 
+            //Call setInterval() to run after every second and calculate remaining time
             intervalId = setInterval(calculateTimeRemaining, 1000);
         }
     }
 
+
+    // Function that calculates the time remaining to asnswe the question 
     function calculateTimeRemaining() {
 
         //If time is up then do what submit button does
@@ -207,7 +228,7 @@ $(document).ready(function(){
     }
 
 
-
+    //Function executed when user clickes on 'Submit' button to submit the answer for a question
     function onSubmit() {
     
         console.log("Question Submitted...");
@@ -225,28 +246,40 @@ $(document).ready(function(){
 
 
         // Get value out of radio button you selected
-        var answer = $(`input[name=${questionIndex}]:checked`).val();
-        console.log("Correct answer: " + questionsObj[questionNo].correctAns + " :: User answer: " + answer);
+        var userAnswer = $(`input[name=${questionIndex}]:checked`).val();
+        console.log("Correct answer: " + questionsObj[questionNo].correctAns + " :: User answer: " + userAnswer);
 
 
         //If user selected correct answer then display Answer is correct
-        if(questionsObj[questionNo].correctAns === answer) {
+        if(questionsObj[questionNo].correctAns === userAnswer) {
             
-            var res = $("<h5 class='m-3'>")
+            $("<h5>")
+            .addClass('btn btn-outline-success m-3')
             .append("<strong>Your answer is Correct.</strong>")
-            .attr("color", "green");
+            .appendTo($("#result")); 
 
-            $("#result").append(res); 
 
             correctAnsCount++; //Calculate number of correct answers
             console.log("correctAnsCount: " + correctAnsCount);
         }
-        //If user answers incorrectly
+        //If user answers incorrectly or time runs out
         else {
-            $("<h5 class='m-3'>")
-            .append("<strong>Your answer is Incorrect.</strong>")
-            .attr("color", "red")
-            .appendTo($("#result")); 
+
+            //If user has not yet selected any option and timer runs out then display Time Up! with correct ans
+            if($timeRemaining === 0) {
+
+                $("<h5>")
+                .addClass('btn btn-outline-primary m-3')
+                .append(`Time Up!! Correct answer is <strong> ${questionsObj[questionNo].correctAns} </strong>`)
+                .appendTo($("#result")); 
+            }
+            else {
+
+                $("<h5>")
+                .addClass('btn btn-outline-danger m-3')
+                .append(`Nope! Correct answer is <strong> ${questionsObj[questionNo].correctAns} </strong>`)
+                .appendTo($("#result")); 
+            }
         }
 
         //Increment questionNo count to populate next question on "start()"
@@ -269,12 +302,23 @@ $(document).ready(function(){
         $("#submit").empty();
 
         //Show Correct & Answers
-        $("#result").append("<h5 class='m-5'>Correct Answers: " + correctAnsCount + "</h5>");
-        $("#result").append("<h5 class='m-5'>Incorrect Answers: " + (questionsObj.length - correctAnsCount) + "</h5>");
+        $("<h5>")
+            .addClass("m-5 d-flex justify-content-center")
+            .text(`Correct Answers: ${correctAnsCount}`)
+            .appendTo($("#result"));
         
+        $("<h5>")
+            .addClass("mt-3 d-flex justify-content-center")
+            .text(`Incorrect Answers: ${(questionsObj.length - correctAnsCount)}`)
+            .appendTo($("#result"));
+
 
         //Create "Start new quiz" button
-        $("#strtNewQuiz").append("<button type='button' class='btn btn-info btn-lg mb-5'><h3>Start new Quiz</h3></button>");
+        $("<button>")
+            .attr("type", "button")
+            .addClass("btn btn-primary mb-5")
+            .append(`<h3>Start Quiz Again</h3>`)
+            .appendTo($("#strtNewQuiz"));
 
     }
 
